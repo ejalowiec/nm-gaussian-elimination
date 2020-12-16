@@ -1,20 +1,49 @@
-﻿// gaussian-elimination.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
-//
+﻿//https://github.com/ejalowiec/nm-gaussian-elimination
 
 #include <iostream>
+#include <fstream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+int main() {
+
+	// ---------------------- reading file ----------------------
+
+	fstream file;
+	file.open("test.txt", ios::in);
+
+	if (!file.good()) {
+		cerr << "File does not exist";
+		exit(0);
+	}
+
+	int size;
+	file >> size;
+
+	if (size <= 1) {
+		cerr << "Number of equations is too low";
+		exit(0);
+	}
+
+	double** arr = new double*[size];
+	for (int i = 0; i < size; ++i)
+		arr[i] = new double[size + 1];
+
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size + 1; ++j)
+			file >> arr[i][j];
+	}
+
+	file.close();
+
+
+
+	// ---------------------- displaying results ----------------------
+	// 1.
+	cout << "Equations: " << endl;
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size + 1; ++j)
+			cout << arr[i][j] << "\t";
+		cout << "\n";
+	}
 }
-
-// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
-// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
-
-// Porady dotyczące rozpoczynania pracy:
-//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
-//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
-//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
-//   4. Użyj okna Lista błędów, aby zobaczyć błędy
-//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
-//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln

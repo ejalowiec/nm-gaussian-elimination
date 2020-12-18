@@ -3,15 +3,18 @@
 #include <iostream>
 #include <fstream>
 #include<iomanip>
+#define SIZE 4
 
 using namespace std;
+
+void showMatrix(double**, int );
 
 int main() {
 
 	// ---------------------- reading file ----------------------
 
 	fstream file;
-	file.open("test.txt", ios::in);
+	file.open("test1.txt", ios::in);
 
 	if (!file.good()) {
 		cerr << "File does not exist";
@@ -42,11 +45,8 @@ int main() {
 	// displaying initial equations
 	cout << "No of equations: " << size << endl;
 	cout << "Equations: " << endl;
-	for (int i = 0; i < size; ++i) {
-		for (int j = 0; j <= size; ++j)
-			cout << arr[i][j] << setw(12);
-		cout << "\n";
-	}
+
+	showMatrix(arr, SIZE);
 
 	//// pivotisation
 	//for (int i = 0; i < size; ++i) {
@@ -110,4 +110,13 @@ int main() {
 	delete[] arr;
 
 	return 0;
+}
+
+void showMatrix(double** arr, int size) {
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j <= size; ++j) {
+			cout << arr[i][j] << setw(12);
+		}
+		cout << "\n";
+	}
 }

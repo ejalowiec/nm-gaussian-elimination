@@ -48,26 +48,22 @@ int main() {
 
 	showMatrix(arr, SIZE);
 
-	//// pivotisation
-	//for (int i = 0; i < size; ++i) {
-	//	for (int k = i + 1; k < size; ++k) {
-	//		if (abs(arr[i][i]) < abs(arr[k][i])) {
-	//			for (int j = 0; j <= size; ++j) {
-	//				double temp = arr[i][j];
-	//				arr[i][j] = arr[k][j];
-	//				arr[k][j] = temp;
-	//			}
-	//		}
-	//	}
-	//}
-	//cout << "\nMatrix after pivotisation:\n";
+	// pivotisation
+	for (int i = 0; i < size; ++i) {
+		for (int k = i + 1; k < size; ++k) {
+			if (abs(arr[i][i]) < abs(arr[k][i])) {
+				for (int j = 0; j <= size; ++j) {
+					double temp = arr[i][j];
+					arr[i][j] = arr[k][j];
+					arr[k][j] = temp;
+				}
+			}
+		}
+	}
 
-	//// matrix after pivotisation
-	//for (int i = 0; i < size; ++i) {
-	//	for (int j = 0; j <= size; ++j)
-	//		cout << arr[i][j] << setw(12);
-	//	cout << "\n";
-	//}
+	cout << "\nMatrix after pivotisation:\n";
+
+	showMatrix(arr, SIZE);
 
 	// gauss elimination
 	for (int i = 0; i < size - 1; i++) {
@@ -100,9 +96,7 @@ int main() {
 	for (int i = 0; i < size; ++i)
 		cout << "x" << i + 1 << ":\t" << resultArr[i] << endl;
 
-
 	// delete dynamic arrays
-
 	for (int i = 0; i < size; ++i) {
 		delete[] arr[i];
 	}

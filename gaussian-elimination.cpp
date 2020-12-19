@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include<iomanip>
-#define SIZE 3
 
 using namespace std;
 
@@ -46,30 +45,36 @@ int main() {
 	// displaying initial equations
 	cout << "No of equations: " << size << endl;
 	cout << "Equations: " << endl;
-	showMatrix(arr, SIZE);
+	showMatrix(arr, size);
 
-	// pivotisation
-	pivotizeMatrix(arr, SIZE);
-	cout << "\nMatrix after pivotisation:\n";
-	showMatrix(arr, SIZE);
-
-	// gauss elimination
+	// pivotization
 	for (int i = 0; i < size - 1; i++) {
+		for (int k = i + 1; k < size; ++k) {
+			if (abs(arr[i][i]) < abs(arr[k][i])) {
+				for (int j = 0; j <= size; ++j) {
+					double temp = arr[i][j];
+					arr[i][j] = arr[k][j];
+					arr[k][j] = temp;
+				}
+			}
+		}
+
+		cout << "\nMatrix after " << i + 1 << " pivotisation:\n";
+		showMatrix(arr, size);
+
+		// gaussian elimination
+
 		for (int k = i + 1; k < size; ++k) {
 			double ratio = arr[k][i] / arr[i][i];
 			for (int j = 0; j <= size; ++j)
 				arr[k][j] -= (ratio * arr[i][j]);
 		}
-		cout << "\nMatrix after " << i + 1 << " iteration:\n";
-		showMatrix(arr, SIZE);
+		cout << "\nMatrix after " << i + 1 << " gaussian iteration:\n";
+		showMatrix(arr, size);
 	}
 
-	cout << "\nMatrix after Gaussian elimination:\n";
-	for (int i = 0; i < size; ++i) {
-		for (int j = 0; j <= size; j++)
-			cout << arr[i][j] << setw(12);
-		cout << "\n";
-	}
+	cout << "\nMatrix after gaussian elimination:\n";
+	showMatrix(arr, size);
 
 	// back substitution
 	for (int i = size - 1; i >= 0; --i)	{
@@ -102,19 +107,5 @@ void showMatrix(double** arr, int size) {
 			cout << arr[i][j] << setw(12);
 		}
 		cout << "\n";
-	}
-}
-
-void pivotizeMatrix(double** arr, int size) {
-	for (int i = 0; i < size; ++i) {
-		for (int k = i + 1; k < size; ++k) {
-			if (abs(arr[i][i]) < abs(arr[k][i])) {
-				for (int j = 0; j <= size; ++j) {
-					double temp = arr[i][j];
-					arr[i][j] = arr[k][j];
-					arr[k][j] = temp;
-				}
-			}
-		}
 	}
 }

@@ -3,18 +3,19 @@
 #include <iostream>
 #include <fstream>
 #include<iomanip>
-#define SIZE 4
+#define SIZE 3
 
 using namespace std;
 
 void showMatrix(double**, int );
+void pivotizeMatrix(double**, int);
 
 int main() {
 
 	// ---------------------- reading file ----------------------
 
 	fstream file;
-	file.open("test1.txt", ios::in);
+	file.open("test2.txt", ios::in);
 
 	if (!file.good()) {
 		cerr << "File does not exist";
@@ -45,24 +46,11 @@ int main() {
 	// displaying initial equations
 	cout << "No of equations: " << size << endl;
 	cout << "Equations: " << endl;
-
 	showMatrix(arr, SIZE);
 
 	// pivotisation
-	for (int i = 0; i < size; ++i) {
-		for (int k = i + 1; k < size; ++k) {
-			if (abs(arr[i][i]) < abs(arr[k][i])) {
-				for (int j = 0; j <= size; ++j) {
-					double temp = arr[i][j];
-					arr[i][j] = arr[k][j];
-					arr[k][j] = temp;
-				}
-			}
-		}
-	}
-
+	pivotizeMatrix(arr, SIZE);
 	cout << "\nMatrix after pivotisation:\n";
-
 	showMatrix(arr, SIZE);
 
 	// gauss elimination
@@ -72,6 +60,8 @@ int main() {
 			for (int j = 0; j <= size; ++j)
 				arr[k][j] -= (ratio * arr[i][j]);
 		}
+		cout << "\nMatrix after " << i + 1 << " iteration:\n";
+		showMatrix(arr, SIZE);
 	}
 
 	cout << "\nMatrix after Gaussian elimination:\n";
@@ -112,5 +102,19 @@ void showMatrix(double** arr, int size) {
 			cout << arr[i][j] << setw(12);
 		}
 		cout << "\n";
+	}
+}
+
+void pivotizeMatrix(double** arr, int size) {
+	for (int i = 0; i < size; ++i) {
+		for (int k = i + 1; k < size; ++k) {
+			if (abs(arr[i][i]) < abs(arr[k][i])) {
+				for (int j = 0; j <= size; ++j) {
+					double temp = arr[i][j];
+					arr[i][j] = arr[k][j];
+					arr[k][j] = temp;
+				}
+			}
+		}
 	}
 }
